@@ -2,21 +2,20 @@
 const operations = ['+', '-', '*', '/'];
 
 /*---------------------------- Variables (state) ----------------------------*/
-
 let currentInput = '';  
-let result;      
+let result = null;      
 let lastOperation = ''; 
+
 /*------------------------ Cached Element References ------------------------*/
 const displayEl = document.querySelector('.display'); 
 const buttons = document.querySelectorAll('.button');
-console.log(displayEl)
 
 /*-------------------------------- Functions --------------------------------*/
 function init() {
     currentInput = '';
-    result = '';
+    result = null;
     lastOperation = '';
-    displayEl.textContent= "0";
+    displayEl.textContent = "0";
 }
 
 function handleButtonClick(event) {
@@ -31,6 +30,7 @@ function handleButtonClick(event) {
             }
             currentInput = '';
             lastOperation = buttonValue;
+            displayEl.textContent = result; 
         }
     } 
 
@@ -46,7 +46,6 @@ function handleButtonClick(event) {
     else if (buttonValue === 'C') {
         init();
     } 
-    
     else {
         currentInput += buttonValue;
         displayEl.textContent = currentInput;
@@ -61,20 +60,28 @@ function performCalculation(a, b, operation) {
     } else if (operation === '*') {
         return a * b;
     } else if (operation === '/') {
+        if (b === 0) {
+            return 'Error';
+        }
         return a / b;
     } else {
         return b;
     }
 }
 
+
+
+
+
+init();
 /*----------------------------- Event Listeners -----------------------------*/
 
 buttons.forEach((button) => {
     button.addEventListener('click', handleButtonClick);
 });
 
-/*----------------------------- Initialize -----------------------------*/
-init();
+
+
 
 
 
